@@ -2,13 +2,42 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
+  <title>Nedräkning</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+    }
+
+    #countdown {
+      font-size: 2em;
+    }
+
+    #countdown span {
+      display: inline-block;
+      min-width: 60px;
+    }
+  </style>
 </head>
 <body>
+  <h1>Nedräkning till 31 december 2027, 23:59</h1>
   <div id="countdown">
-    <span id="days"></span> dagar
-    <span id="hours"></span> timmar
-    <span id="minutes"></span> minuter
-    <span id="seconds"></span> sekunder
+    <span id="days">--</span> dagar
+    <span id="hours">--</span> timmar
+    <span id="minutes">--</span> minuter
+    <span id="seconds">--</span> sekunder
   </div>
 
   <script>
@@ -19,7 +48,7 @@
       const distance = targetDate - now;
 
       if (distance <= 0) {
-        document.getElementById("countdown").innerHTML = "Tiden har gått ut!";
+        document.getElementById("countdown").textContent = "Tiden har gått ut!";
         clearInterval(interval);
         return;
       }
