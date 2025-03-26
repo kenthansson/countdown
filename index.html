@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Nedräkning till 31 december 2027, 23:59</h1>
+  <div id="countdown">
+    <span id="days"></span> dagar
+    <span id="hours"></span> timmar
+    <span id="minutes"></span> minuter
+    <span id="seconds"></span> sekunder
+  </div>
+
+  <script>
+    const targetDate = new Date("2027-12-31T23:59:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").innerHTML = "Tiden har gått ut!";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = ("0" + hours).slice(-2);
+      document.getElementById("minutes").textContent = ("0" + minutes).slice(-2);
+      document.getElementById("seconds").textContent = ("0" + seconds).slice(-2);
+    }
+
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
