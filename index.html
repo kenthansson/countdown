@@ -18,11 +18,17 @@
 
     h1 {
       font-size: 2.5em;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
 
     #countdown {
-      font-size: 2.5em;
+      font-size: 2em;
+      margin-bottom: 1em;
+    }
+
+    #workdays {
+      font-size: 1.5em;
+      color: #444;
     }
 
     #countdown span {
@@ -32,17 +38,17 @@
   </style>
 </head>
 <body>
-  <h1>Nedräkning NextGen - 2027-12-31 - 23:59</h1>
+  <h1>Nedräkning NextGen - 2027-12-31 - 23:59</h1>  
   <div id="countdown">
     <span id="days">--</span> dagar
     <span id="hours">--</span> timmar
     <span id="minutes">--</span> minuter
     <span id="seconds">--</span> sekunder
-    återstår!
   </div>
+  <div id="workdays">Arbetsdagar kvar: --</div>
 
   <script>
-    const targetDate = new Date("2027-12-31T23:59:59");
+    const targetDate = new Date("2027-12-31T23:59:00");
 
     function updateCountdown() {
       const now = new Date();
@@ -50,6 +56,7 @@
 
       if (distance <= 0) {
         document.getElementById("countdown").textContent = "Tiden har gått ut!";
+        document.getElementById("workdays").textContent = "";
         clearInterval(interval);
         return;
       }
@@ -63,6 +70,94 @@
       document.getElementById("hours").textContent = ("0" + hours).slice(-2);
       document.getElementById("minutes").textContent = ("0" + minutes).slice(-2);
       document.getElementById("seconds").textContent = ("0" + seconds).slice(-2);
+
+      document.getElementById("workdays").textContent = "Arbetsdagar kvar: " + calculateWorkdays(now, targetDate);
+    }
+
+    function calculateWorkdays(startDate, endDate) {
+      let count = 0;
+      const date = new Date(startDate);
+      const holidays = getSwedishHolidays(startDate.getFullYear(), endDate.getFullYear());
+
+      while (date <= endDate) {
+        const day = date.getDay();
+        const dateStr = date.toISOString().split("T")[0];
+
+        if (day >= 1 && day <= 5 && !holidays.has(dateStr)) {
+          count++;
+        }
+
+        date.setDate(date.getDate() + 1);
+      }
+
+      const years = endDate.getFullYear() - startDate.getFullYear() + 1;
+      const estimatedVacation = years * 40;
+      const workdaysLeft = Math.max(0, count - estimatedVacation);
+      return workdaysLeft;
+    }
+
+    function getSwedishHolidays(startYear, endYear) {
+      const holidays = new Set();
+
+      for (let year = startYear; year <= endYear; year++) {
+        // Fasta datum
+        [
+          "01-01", // Nyårsdagen
+          "01-06", // Trettondagen
+          "05-01", // Första maj
+          "06-06", // Nationaldagen
+          "12-24", // Julafton
+          "12-25", // Juldagen
+          "12-26", // Annandag jul
+          "12-31"  // Nyårsafton
+        ].forEach(d => holidays.add(`${year}-${d}`));
+
+        // Rörliga datum
+        const easter = getEasterDate(year);
+        const goodFriday = new Date(easter);
+        goodFriday.setDate(easter.getDate() - 2);
+
+        const easterMonday = new Date(easter);
+        easterMonday.setDate(easter.getDate() + 1);
+
+        const ascension = new Date(easter);
+        ascension.setDate(easter.getDate() + 39);
+
+        const pentecost = new Date(easter);
+        pentecost.setDate(easter.getDate() + 49);
+
+        const midsummer = getMidsummerEve(year);
+
+        [goodFriday, easter, easterMonday, ascension, pentecost, midsummer].forEach(d => {
+          holidays.add(d.toISOString().split("T")[0]);
+        });
+      }
+
+      return holidays;
+    }
+
+    function getEasterDate(year) {
+      // Anonymous Gregorian algorithm
+      const f = Math.floor;
+      const G = year % 19;
+      const C = f(year / 100);
+      const H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30;
+      const I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11));
+      const J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7;
+      const L = I - J;
+      const month = 3 + f((L + 40) / 44);
+      const day = L + 28 - 31 * f(month / 4);
+      return new Date(year, month - 1, day);
+    }
+
+    function getMidsummerEve(year) {
+      // Midsommarafton: fredag mellan 19–25 juni
+      for (let d = 19; d <= 25; d++) {
+        const date = new Date(year, 5, d); // juni = 5
+        if (date.getDay() === 5) {
+          return date;
+        }
+      }
     }
 
     const interval = setInterval(updateCountdown, 1000);
