@@ -45,27 +45,42 @@
       border: none;
       color: #0077cc;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    #toggleListBtn:hover {
       text-decoration: underline;
     }
 
     #lista {
-      display: none;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+      opacity: 0;
       text-align: left;
       max-width: 700px;
       padding: 0 1em;
     }
 
-    #lista h3 {
-      margin-top: 0;
-      font-size: 1.2em;
+    #lista.show {
+      max-height: 2000px;
+      opacity: 1;
+    }
+
+    #lista p {
+      margin-top: 0.5em;
+      font-weight: bold;
+      font-size: 1em;
     }
 
     #lista ul {
       list-style-type: disc;
-      margin: 0;
       padding-left: 1.2em;
       font-size: 1em;
       line-height: 1.6;
+      margin: 0;
     }
 
     #lista ul li {
@@ -85,10 +100,12 @@
   <div id="workdays">Arbetsdagar kvar: --</div>
   <div id="intervals">SAFe-intervaller kvar: --</div>
 
-  <button id="toggleListBtn" onclick="toggleList()">+ Visa vad andra åstadkommit på X dagar</button>
+  <button id="toggleListBtn" onclick="toggleList()">
+    <span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen
+  </button>
 
   <div id="lista">
-    <h3>Vad andra åstadkommit på X dagar (enligt ChatGPT)</h3>
+    <p>Inspirerande exempel på framgång inom 1000 dagar</p>
     <ul>
       <li>1000 dagar: Apple – från första idé till lansering av iPhone 1</li>
       <li>1000 dagar: Amazon.com – från start till första stabila leverans- och lagersystem</li>
@@ -105,8 +122,8 @@
       <li>400 dagar: Klarna Checkout – från idé till lansering i Norden</li>
       <li>400 dagar: Dropbox – från pitchvideo till lansering och 1 miljon användare</li>
       <li>300 dagar: ChatGPT (GPT-3) – från träningsstart till labs-version live</li>
-      <li>300 dagar: TikTok (internationellt) – från omprofilering av Musical.ly till global spridning</li>
-      <li>200 dagar: LinkedIn – från kodstart till första release (2003)</li>
+      <li>300 dagar: TikTok – från omprofilering av Musical.ly till global spridning</li>
+      <li>200 dagar: LinkedIn – från kodstart till första release</li>
       <li>200 dagar: Airbnb – från idé till första fungerande bokningar i San Francisco</li>
       <li>100 dagar: Apple skapade den första M1-chip-prototypen</li>
     </ul>
@@ -206,11 +223,18 @@
     function toggleList() {
       const lista = document.getElementById("lista");
       const btn = document.getElementById("toggleListBtn");
-      const isVisible = lista.style.display === "block";
-      lista.style.display = isVisible ? "none" : "block";
-      btn.textContent = isVisible 
-        ? "+ Visa vad andra åstadkommit på X dagar" 
-        : "− Dölj listan";
+      const icon = document.getElementById("toggleIcon");
+      const isVisible = lista.classList.contains("show");
+
+      if (isVisible) {
+        lista.classList.remove("show");
+        icon.textContent = "⏷";
+        btn.innerHTML = '<span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen';
+      } else {
+        lista.classList.add("show");
+        icon.textContent = "⏶";
+        btn.innerHTML = '<span id="toggleIcon">⏶</span> Dölj listan';
+      }
     }
 
     const interval = setInterval(updateCountdown, 1000);
