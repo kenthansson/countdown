@@ -81,8 +81,8 @@
 
       document.getElementById("workdays").textContent = "Arbetsdagar kvar: " + calculateWorkdays(now, targetDate);
 
-      const intervalLength = 10 * 7; // 10 veckor × 5 arbetsdagar
-      const intervalsLeft = (distance / intervalLength).toFixed(2);
+      const intervalLength = 70; 
+      const intervalsLeft = (days / intervalLength).toFixed(2);
       document.getElementById("intervals").textContent = "SAFe-intervaller kvar: " + intervalsLeft;
 
     }
