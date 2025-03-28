@@ -9,15 +9,21 @@
       padding: 0;
       height: 100%;
       font-family: sans-serif;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
-    
-    body {
-      justify-content: center; /* Centrerar innehållet i mitten */
+
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      flex: 1 0 auto;
     }
 
     h1 {
@@ -52,10 +58,15 @@
       display: flex;
       align-items: center;
       gap: 0.5em;
+      text-decoration: none;
     }
 
     #toggleListBtn:hover {
       text-decoration: none;
+    }
+
+    #toggleIcon {
+      color: black;
     }
 
     #lista {
@@ -91,37 +102,34 @@
       margin-bottom: 0.5em;
     }
 
-    #toggleIcon {
-      color: black;
-    }
-
     #footer {
       font-size: 0.75em;
       color: #888;
-      margin-top: auto;
       padding: 1em;
       text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>NextGen - 2027-12-31</h1>  
-  <div id="countdown">
-    Total tid kvar: 
-    <span id="days">--</span> dagar
-    <span id="hours">--</span> timmar
-    <span id="minutes">--</span> minuter
-    <span id="seconds">--</span> sekunder
-  </div>
-  <div id="workdays">Arbetsdagar kvar: --</div>
-  <div id="intervals">SAFe-intervaller kvar: --</div>
+  <div id="main">
+    <h1>NextGen - 2027-12-31</h1>  
+    <div id="countdown">
+      Total tid kvar: 
+      <span id="days">--</span> dagar
+      <span id="hours">--</span> timmar
+      <span id="minutes">--</span> minuter
+      <span id="seconds">--</span> sekunder
+    </div>
+    <div id="workdays">Arbetsdagar kvar: --</div>
+    <div id="intervals">SAFe-intervaller kvar: --</div>
 
-  <button id="toggleListBtn" onclick="toggleList()">
-    <span id="toggleIcon">⏷</span>
-  </button>
+    <button id="toggleListBtn" onclick="toggleList()">
+      <span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen
+    </button>
 
-  <div id="lista">
-    <ul>
+    <div id="lista">
+      <p>Inspirerande exempel på framgång inom 1000 dagar</p>
+      <ul>
       <li>1000 dagar: Apple – från första idé till lansering av iPhone 1</li>
       <li>900 dagar: Facebook – från grundande till &gt;100 miljoner användare</li>
       <li>800 dagar: Tesla Model S – från konceptbil till första kundleverans</li>
@@ -132,8 +140,11 @@
       <li>300 dagar: ChatGPT (GPT-3) – från träningsstart till labs-version live</li>
       <li>200 dagar: Airbnb – från idé till första fungerande bokningar i San Francisco</li>
       <li>100 dagar: Apple skapade den första M1-chip-prototypen</li>
-    </ul>
+      </ul>
+    </div>
   </div>
+
+  <div id="footer">Skapad i mars 2025</div>
 
   <script>
     const targetDate = new Date("2027-12-31T23:59:00");
@@ -235,17 +246,16 @@
       if (isVisible) {
         lista.classList.remove("show");
         icon.textContent = "⏷";
-        btn.innerHTML = '<span id="toggleIcon">⏷</span>';
+        btn.innerHTML = '<span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen';
       } else {
         lista.classList.add("show");
         icon.textContent = "⏶";
-        btn.innerHTML = '<span id="toggleIcon">⏶</span>';
+        btn.innerHTML = '<span id="toggleIcon">⏶</span> Dölj listan';
       }
     }
 
     const interval = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
-  <div id="footer">Skapad 2025-03-26</div>
 </body>
 </html>
