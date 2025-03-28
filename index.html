@@ -15,6 +15,10 @@
       justify-content: center;
       text-align: center;
     }
+    
+    body {
+      min-height: 100vh;
+    }
 
     h1 {
       font-size: 4em;
@@ -90,6 +94,14 @@
     #toggleIcon {
       color: black;
     }
+
+    #footerInfo {
+      font-size: 0.75em;
+      color: #888;
+      margin-top: 2em;
+      padding-bottom: 1em;
+    }
+
   </style>
 </head>
 <body>
@@ -234,5 +246,6 @@
     const interval = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
+  <footer id="footerInfo">Skapad den 2025‑03‑26</footer>
 </body>
 </html>
