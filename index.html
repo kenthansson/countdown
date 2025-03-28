@@ -11,9 +11,13 @@
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
+    }
+    
+    body {
+      justify-content: center; /* Centrerar innehållet i mitten */
       align-items: center;
-      justify-content: center;
       text-align: center;
+      flex: 1 0 auto;
     }
 
     h1 {
@@ -91,14 +95,13 @@
       color: black;
     }
 
-    #footerInfo {
+    #footer {
       font-size: 0.75em;
       color: #888;
-      margin-top: 2em;
-      padding-bottom: 1em;
-      position: absolute
+      margin-top: auto;
+      padding: 1em;
+      text-align: center;
     }
-
   </style>
 </head>
 <body>
@@ -243,6 +246,6 @@
     const interval = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
-  <footer id="footerInfo">Skapad den 2025‑03‑26</footer>
+  <div id="footer">Skapad 2025-03-26</div>
 </body>
 </html>
