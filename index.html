@@ -124,11 +124,10 @@
     <div id="intervals">SAFe-intervaller kvar: --</div>
 
     <button id="toggleListBtn" onclick="toggleList()">
-      <span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen
+      <span id="toggleIcon">⏷</span>
     </button>
 
     <div id="lista">
-      <p>Inspirerande exempel på framgång inom 1000 dagar</p>
       <ul>
       <li>1000 dagar: Apple – från första idé till lansering av iPhone 1</li>
       <li>900 dagar: Facebook – från grundande till &gt;100 miljoner användare</li>
@@ -144,7 +143,7 @@
     </div>
   </div>
 
-  <div id="footer">Skapad i mars 2025</div>
+  <div id="footer">Skapad 2025-03-26</div>
 
   <script>
     const targetDate = new Date("2027-12-31T23:59:00");
@@ -246,11 +245,11 @@
       if (isVisible) {
         lista.classList.remove("show");
         icon.textContent = "⏷";
-        btn.innerHTML = '<span id="toggleIcon">⏷</span> Visa exempel på vad som åstadkommits på vägen';
+        btn.innerHTML = '<span id="toggleIcon">⏷</span>';
       } else {
         lista.classList.add("show");
         icon.textContent = "⏶";
-        btn.innerHTML = '<span id="toggleIcon">⏶</span> Dölj listan';
+        btn.innerHTML = '<span id="toggleIcon">⏶</span>';
       }
     }
 
