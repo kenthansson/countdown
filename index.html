@@ -40,22 +40,12 @@
       display: inline-block;
       min-width: 60px;
     }
-    #info-box {
-      margin-top: 2em;
-      background: #f8f8f8;
-      border-radius: 14px;
-      box-shadow: 0 1px 8px #0001;
-      padding: 1.5em 2em;
-      text-align: left;
-      display: inline-block;
-    }
-    #info-box p {
-      margin: 0.5em 0 0.2em;
-      font-weight: bold;
-      font-size: 1.08em;
-    }
-    #date-info, #weather {
-      margin-bottom: 1em;
+    /* Info-rader under nedräkningen */
+    .info-row {
+      font-size: 1.1em;
+      margin: 0.1em 0;
+      color: #222;
+      font-weight: normal;
     }
     #footer {
       font-size: 0.75em;
@@ -78,17 +68,10 @@
     <div id="workdays">Arbetsdagar kvar: --</div>
     <div id="intervals">SAFe-intervaller kvar: --</div>
 
-    <div id="info-box">
-      <p>Info:</p>
-      <div id="date-info">
-        <div id="current-date">Datum: --</div>
-        <div id="name-day">Namnsdag: --</div>
-      </div>
-      <div id="weather">
-        <div id="weather-lulea">Väder i Luleå: --</div>
-        <div id="weather-stockholm">Väder i Stockholm: --</div>
-      </div>
-    </div>
+    <div id="current-date" class="info-row">Datum: --</div>
+    <div id="name-day" class="info-row">Namnsdag: --</div>
+    <div id="weather-lulea" class="info-row">Väder i Luleå: --</div>
+    <div id="weather-stockholm" class="info-row">Väder i Stockholm: --</div>
   </div>
   <script>
     const targetDate = new Date("2027-12-31T23:59:00");
