@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
   <meta charset="UTF-8">
   <title>Nedräkning NextGen</title>
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: sans-serif;
     }
-
     body {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
-
     #main {
       flex: 1;
       display: flex;
@@ -27,83 +23,40 @@
       justify-content: center;
       text-align: center;
     }
-
     h1 {
       font-size: 4em;
       margin-bottom: 0.5em;
     }
-
     #countdown {
       font-size: 2em;
       margin-bottom: 1em;
     }
-
-    #workdays,
-    #intervals {
+    #workdays, #intervals {
       font-size: 1.5em;
       color: #444;
       margin-bottom: 0.5em;
     }
-
     #countdown span {
       display: inline-block;
       min-width: 60px;
     }
-
-    #toggleListBtn {
-      margin: 1.5em 0 0.5em;
-      font-size: 1em;
-      background: none;
-      border: none;
-      color: #0077cc;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-      text-decoration: none;
-    }
-
-    #toggleListBtn:hover {
-      text-decoration: none;
-    }
-
-    #toggleIcon {
-      color: black;
-    }
-
-    #lista {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.4s ease-out, opacity 0.3s ease;
-      opacity: 0;
+    #info-box {
+      margin-top: 2em;
+      background: #f8f8f8;
+      border-radius: 14px;
+      box-shadow: 0 1px 8px #0001;
+      padding: 1.5em 2em;
       text-align: left;
-      max-width: 700px;
-      padding: 0 1em;
+      display: inline-block;
     }
-
-    #lista.show {
-      max-height: 2000px;
-      opacity: 1;
-    }
-
-    #lista p {
-      margin-top: 0.5em;
+    #info-box p {
+      margin: 0.5em 0 0.2em;
       font-weight: bold;
-      font-size: 1em;
+      font-size: 1.08em;
     }
-
-    #lista ul {
-      list-style-type: disc;
-      padding-left: 1.2em;
-      font-size: 1em;
-      line-height: 1.6;
-      margin: 0;
+    #date-info, #weather {
+      margin-bottom: 1em;
     }
-
-    #lista ul li {
-      margin-bottom: 0.5em;
-    }
-
     #footer {
       font-size: 0.75em;
       color: #888;
@@ -112,7 +65,6 @@
     }
   </style>
 </head>
-
 <body>
   <div id="main">
     <h1>NextGen - 2027-12-31</h1>
@@ -126,57 +78,31 @@
     <div id="workdays">Arbetsdagar kvar: --</div>
     <div id="intervals">SAFe-intervaller kvar: --</div>
 
-    <button id="toggleListBtn" onclick="toggleList()">
-      <span id="toggleIcon">⏷</span>
-    </button>
-
-    <div id="lista">
-
+    <div id="info-box">
       <p>Info:</p>
       <div id="date-info">
         <div id="current-date">Datum: --</div>
         <div id="name-day">Namnsdag: --</div>
       </div>
-  
       <div id="weather">
         <div id="weather-lulea">Väder i Luleå: --</div>
         <div id="weather-stockholm">Väder i Stockholm: --</div>
       </div>
-
-      <br>
-
-      <p>Exempel på projekt med respektive tid att utveckla:</p>
-      <ul>
-        <li>1000 dagar: Apple – från första idé till lansering av iPhone 1</li>
-        <li>900 dagar: Facebook – från grundande till &gt;100 miljoner användare</li>
-        <li>800 dagar: Tesla Model S – från konceptbil till första kundleverans</li>
-        <li>700 dagar: Instagram – från prototyp till miljardförvärv av Facebook</li>
-        <li>600 dagar: Microsoft Teams – från projektstart till global lansering</li>
-        <li>500 dagar: WhatsApp – från MVP till 10 miljoner användare</li>
-        <li>400 dagar: Klarna Checkout – från idé till lansering i Norden</li>
-        <li>300 dagar: ChatGPT (GPT-3) – från träningsstart till labs-version live</li>
-        <li>200 dagar: Airbnb – från idé till första fungerande bokningar i San Francisco</li>
-        <li>100 dagar: Apple skapade den första M1-chip-prototypen</li>
-      </ul>
     </div>
   </div>
-
   <div id="footer">Skapad 2025-03-26</div>
-
   <script>
     const targetDate = new Date("2027-12-31T23:59:00");
 
     function updateCountdown() {
       const now = new Date();
       const distance = targetDate - now;
-
       if (distance <= 0) {
         document.getElementById("countdown").textContent = "Tiden har gått ut!";
         document.getElementById("workdays").textContent = "";
         clearInterval(interval);
         return;
       }
-
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -207,7 +133,6 @@
         }
         date.setDate(date.getDate() + 1);
       }
-
       const years = endDate.getFullYear() - startDate.getFullYear() + 1;
       const estimatedVacation = years * 40;
       return Math.max(0, count - estimatedVacation);
@@ -215,11 +140,9 @@
 
     function getSwedishHolidays(startYear, endYear) {
       const holidays = new Set();
-
       for (let year = startYear; year <= endYear; year++) {
         ["01-01", "01-06", "05-01", "06-06", "12-24", "12-25", "12-26", "12-31"]
           .forEach(d => holidays.add(`${year}-${d}`));
-
         const easter = getEasterDate(year);
         const goodFriday = new Date(easter); goodFriday.setDate(easter.getDate() - 2);
         const easterMonday = new Date(easter); easterMonday.setDate(easter.getDate() + 1);
@@ -230,7 +153,6 @@
         [goodFriday, easter, easterMonday, ascension, pentecost, midsummer]
           .forEach(d => holidays.add(d.toISOString().split("T")[0]));
       }
-
       return holidays;
     }
 
@@ -251,23 +173,6 @@
       for (let d = 19; d <= 25; d++) {
         const date = new Date(year, 5, d);
         if (date.getDay() === 5) return date;
-      }
-    }
-
-    function toggleList() {
-      const lista = document.getElementById("lista");
-      const btn = document.getElementById("toggleListBtn");
-      const icon = document.getElementById("toggleIcon");
-      const isVisible = lista.classList.contains("show");
-
-      if (isVisible) {
-        lista.classList.remove("show");
-        icon.textContent = "⏷";
-        btn.innerHTML = '<span id="toggleIcon">⏷</span>';
-      } else {
-        lista.classList.add("show");
-        icon.textContent = "⏶";
-        btn.innerHTML = '<span id="toggleIcon">⏶</span>';
       }
     }
 
@@ -301,12 +206,9 @@
             document.getElementById(elementId).textContent = `Väder i ${city}: (kunde ej hämtas)`;
           });
       };
-
       fetchWeather('Lulea,SE', 'weather-lulea');
       fetchWeather('Stockholm,SE', 'weather-stockholm');
     });
-
   </script>
 </body>
-
 </html>
